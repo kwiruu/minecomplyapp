@@ -13,7 +13,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { DashboardStats } from "../types";
 import { getMe, listProjectSubmissions } from "../lib/compliance";
 
-const DashboardScreen = () => {
+const DashboardScreen = ({ navigation }: any) => {
   const { user } = useAuth();
   const [refreshing, setRefreshing] = useState(false);
   const [stats, setStats] = useState<DashboardStats>({
@@ -26,6 +26,8 @@ const DashboardScreen = () => {
   const [recentSubmissions, setRecentSubmissions] = useState<
     Array<{ id: string; title: string; status: string; createdAt: string }>
   >([]);
+  const [firstProjectId, setFirstProjectId] = useState<string | null>(null);
+  const [firstProjectName, setFirstProjectName] = useState<string | null>(null);
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
@@ -43,6 +45,8 @@ const DashboardScreen = () => {
       const firstProject = me.projects[0];
       let subs: any[] = [];
       if (firstProject) {
+        setFirstProjectId(firstProject.id);
+        setFirstProjectName(firstProject.name);
         const { submissions } = await listProjectSubmissions(firstProject.id);
         subs = submissions;
       }
@@ -97,11 +101,19 @@ const DashboardScreen = () => {
         },
         {
           text: "CMVR (Compliance Monitoring Verification Report)",
-          onPress: () =>
-            Alert.alert(
-              "Coming Soon",
-              "CMVR creation will be implemented next!"
-            ),
+          onPress: () => {
+            // Navigate to CMVR screen - it's in the same stack
+            try {
+              navigation.push("CMVRReport", {
+                submissionId: null,
+                projectId: firstProjectId || null,
+                projectName: firstProjectName || "New Project",
+              });
+            } catch (error) {
+              console.error("Navigation error:", error);
+              Alert.alert("Error", "Could not navigate to CMVR screen");
+            }
+          },
         },
       ]
     );
