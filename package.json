@@ -10,6 +10,8 @@
     "check:native-props": "node scripts/check-native-runtime-props.js",
     "check:expo-deps": "expo install --check",
     "check:local-api": "node scripts/check-local-api.js",
+    "check:lockfile": "npm ci --include=dev --dry-run",
+    "check:eas-build": "npm run check:lockfile && npm run check:native-props && npm run check:expo-deps",
     "check:runtime": "npm run check:native-props && npm run check:expo-deps && npm run check:local-api",
     "start:clear": "expo start --clear"
   },
@@ -71,6 +73,7 @@
     "@babel/core": "^7.24.0",
     "@types/react": "~19.1.0",
     "@types/uuid": "^10.0.0",
+    "prettier": "3.8.3",
     "typescript": "~5.9.2"
   },
   "private": true
