@@ -13,6 +13,7 @@ import { styles } from "./styles/authScreen";
 import { FloatingLabelInput } from "./components/FloatingLabelInput";
 // import { scale } from '../utils/responsive';
 import { useAuth } from "../../contexts/AuthContext";
+import { keyboardShouldPersistTapsForFabric } from "../../utils/nativeRuntimeProps";
 
 export default function AuthScreen({ navigation }: any) {
   const [isLogin, setIsLogin] = useState(true);
@@ -129,7 +130,7 @@ export default function AuthScreen({ navigation }: any) {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps={keyboardShouldPersistTapsForFabric}
       >
         {/* Header Section */}
         <View style={styles.header}>

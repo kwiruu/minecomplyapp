@@ -4,9 +4,9 @@ import {
   Text,
   TouchableOpacity,
   ScrollView,
-  SafeAreaView,
   Alert,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { FileText, Calendar, Download, Trash2 } from "lucide-react-native";
 import { theme } from "../../theme/theme";
 import { reportScreenStyles as styles } from "./styles/reportsScreen";

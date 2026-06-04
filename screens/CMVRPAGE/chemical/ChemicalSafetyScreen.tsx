@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import {
   View,
   ScrollView,
-  SafeAreaView,
   Alert,
   TouchableOpacity,
   Text,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { CommonActions } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 

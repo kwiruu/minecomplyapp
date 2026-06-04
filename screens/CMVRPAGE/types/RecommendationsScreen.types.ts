@@ -1,5 +1,5 @@
 // RecommendationsScreen.types.ts
-import { StackNavigationProp } from "@react-navigation/stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 import * as DocumentPicker from "expo-document-picker";
 
@@ -37,7 +37,7 @@ export type RootStackParamList = {
   CMVRDocumentExport: any;
 };
 
-export type RecommendationsScreenNavigationProp = StackNavigationProp<
+export type RecommendationsScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "Recommendations"
 >;

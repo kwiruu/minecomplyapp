@@ -3,17 +3,18 @@ import {
   View,
   Text,
   ScrollView,
-  SafeAreaView,
   Alert,
   ActivityIndicator,
   KeyboardAvoidingView,
   Platform,
   TextInput,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { CustomHeader } from "../../components/CustomHeader";
 import { useAuth } from "../../contexts/AuthContext";
 import { supabase } from "../../lib/supabase";
 import { theme } from "../../theme/theme";
+import { keyboardShouldPersistTapsForFabric } from "../../utils/nativeRuntimeProps";
 import styles from "./styles/profileScreen";
 
 const EditProfileScreen = ({ navigation }: any) => {
@@ -146,7 +147,7 @@ const EditProfileScreen = ({ navigation }: any) => {
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.scrollContent}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps={keyboardShouldPersistTapsForFabric}
         >
           <View style={styles.section}>
             <View style={styles.card}>

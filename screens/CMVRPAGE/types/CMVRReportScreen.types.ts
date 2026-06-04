@@ -1,5 +1,5 @@
 // CMVRReportScreen.types.ts
-import { StackNavigationProp } from "@react-navigation/stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 
 export type RootStackParamList = {
@@ -19,7 +19,7 @@ export type RootStackParamList = {
   };
 };
 
-export type CMVRReportScreenNavigationProp = StackNavigationProp<
+export type CMVRReportScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "CMVRReport"
 >;

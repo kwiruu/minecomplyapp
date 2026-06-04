@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   View,
   Text,
@@ -46,24 +46,14 @@ function RoleCard({ role, onPress }: any) {
       onPressOut={handlePressOut}
       onPress={onPress}
       style={styles.roleWrapper}
-      className="rounded-3xl"
     >
       <Animated.View
         style={[styles.roleCard, { transform: [{ scale: scaleAnim }] }]}
-        className="bg-white items-center justify-center shadow-sm"
       >
-        <View
-          style={styles.iconCircle}
-          className="bg-blue-100 items-center justify-center"
-        >
+        <View style={styles.iconCircle}>
           <Icon color={theme.colors.primaryDark} strokeWidth={2.2} />
         </View>
-        <Text
-          style={styles.roleLabel}
-          className="text-primaryDark font-semibold text-center"
-        >
-          {role.label}
-        </Text>
+        <Text style={styles.roleLabel}>{role.label}</Text>
       </Animated.View>
     </TouchableOpacity>
   );
@@ -79,37 +69,22 @@ export default function RoleSelectionScreen({ navigation }: any) {
   };
 
   return (
-    <SafeAreaProvider style={styles.safeArea} className="bg-background flex-1">
+    <SafeAreaView style={styles.safeArea}>
       <ScrollView
         contentContainerStyle={styles.scrollContainer}
         showsVerticalScrollIndicator={false}
       >
-        {/* Header */}
-        <View style={styles.header} className="items-center">
+        <View style={styles.header}>
           <Image
             source={require("../../assets/images/mc-logo.png")}
             style={styles.logo}
             resizeMode="contain"
           />
-          <Text
-            style={styles.title}
-            className="text-gray-900 font-extrabold text-center"
-          >
-            Select Your Role
-          </Text>
-          <Text
-            style={styles.subtitle}
-            className="text-gray-500 text-center font-medium"
-          >
-            Choose how you’ll use MineComply
-          </Text>
+          <Text style={styles.title}>Select Your Role</Text>
+          <Text style={styles.subtitle}>Choose how you'll use MineComply</Text>
         </View>
 
-        {/* Role Cards */}
-        <View
-          style={styles.rolesContainer}
-          className="flex-row flex-wrap justify-between w-full"
-        >
+        <View style={styles.rolesContainer}>
           {roles.map((role) => (
             <RoleCard
               key={role.label}
@@ -119,6 +94,6 @@ export default function RoleSelectionScreen({ navigation }: any) {
           ))}
         </View>
       </ScrollView>
-    </SafeAreaProvider>
+    </SafeAreaView>
   );
 }

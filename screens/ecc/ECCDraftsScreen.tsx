@@ -6,11 +6,11 @@ import {
   ScrollView,
   Animated,
   Alert,
-  SafeAreaView,
   RefreshControl,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import {
   Plus,
   ClipboardList,
@@ -40,7 +40,7 @@ interface DraftListItem {
   isLocalDraft: boolean;
 }
 
-type Navigation = StackNavigationProp<any>;
+type Navigation = NativeStackNavigationProp<any>;
 
 const CMVRDraftsScreen = () => {
   const { getDraftList, loadDraftById, clearDrafts, deleteDraft } =

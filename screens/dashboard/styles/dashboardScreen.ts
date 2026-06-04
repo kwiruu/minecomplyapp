@@ -23,6 +23,7 @@ export const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    gap: scale(theme.spacing.md),
   },
   backButton: {
   position: "absolute",
@@ -39,16 +40,25 @@ export const styles = StyleSheet.create({
   shadowRadius: 2,
   elevation: 2,
 },
-  
+  greetingBlock: {
+    flex: 1,
+    minWidth: 0,
+    paddingRight: scale(theme.spacing.sm),
+  },
   greeting: {
     fontFamily: theme.typography.bold,
     fontSize: normalizeFont(theme.typography.sizes.xxl),
+    lineHeight: normalizeFont(theme.typography.sizes.xxl) + verticalScale(6),
     color: theme.colors.primaryDark,
+    flexShrink: 1,
+    includeFontPadding: false,
   },
   subGreeting: {
     fontFamily: theme.typography.regular,
     fontSize: normalizeFont(theme.typography.sizes.sm),
     color: theme.colors.textLight,
+    marginBottom: verticalScale(4),
+    includeFontPadding: false,
   },
   avatar: {
     width: moderateScale(48),
@@ -57,11 +67,18 @@ export const styles = StyleSheet.create({
     backgroundColor: theme.colors.primaryLight + "20",
     alignItems: "center",
     justifyContent: "center",
+    flexShrink: 0,
+    overflow: "hidden",
   },
   avatarText: {
     fontFamily: theme.typography.semibold,
     fontSize: normalizeFont(theme.typography.sizes.md),
+    lineHeight: normalizeFont(theme.typography.sizes.md) + verticalScale(2),
     color: theme.colors.primaryDark,
+    includeFontPadding: false,
+    textAlign: "center",
+    textAlignVertical: "center",
+    width: "100%",
   },
   section: {
     paddingHorizontal: scale(theme.spacing.lg),

@@ -111,6 +111,24 @@ function parseHost(candidate: unknown): string | null {
   }
 }
 
+function getApiHealthUrl(): string {
+  return `${apiBaseUrl.replace(/\/+$/, "")}/health`;
+}
+
+function createNetworkErrorMessage(fullUrl: string): string {
+  if (__DEV__) {
+    return [
+      `Network error calling ${fullUrl}.`,
+      "The local backend is not reachable from Expo Go.",
+      "Start the backend with `npm run start:dev` in E:\\FREELANCE\\minecomplyapi,",
+      `then verify ${getApiHealthUrl()}.`,
+      "If it still times out, check Windows Firewall and make sure the phone and PC are on the same network.",
+    ].join(" ");
+  }
+
+  return `Network error calling ${fullUrl}. Please check your internet connection and try again.`;
+}
+
 async function getAccessToken(): Promise<string> {
   try {
     const { data, error } = await supabase.auth.getSession();
@@ -163,9 +181,7 @@ export async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
       });
     } catch (e: any) {
       console.error(`[API] Network error on GET ${fullUrl}:`, e);
-      throw new Error(
-        `Network error calling ${fullUrl}. Please check your internet connection and try again.`
-      );
+      throw new Error(createNetworkErrorMessage(fullUrl));
     }
     
     if (!res.ok) {
@@ -212,9 +228,7 @@ export async function apiPost<T>(
       });
     } catch (e: any) {
       console.error(`[API] Network error on POST ${fullUrl}:`, e);
-      throw new Error(
-        `Network error calling ${fullUrl}. Please check your internet connection and try again.`
-      );
+      throw new Error(createNetworkErrorMessage(fullUrl));
     }
     
     if (!res.ok) {
@@ -258,9 +272,7 @@ export async function apiDelete<T = void>(
       });
     } catch (e: any) {
       console.error(`[API] Network error on DELETE ${fullUrl}:`, e);
-      throw new Error(
-        `Network error calling ${fullUrl}. Please check your internet connection and try again.`
-      );
+      throw new Error(createNetworkErrorMessage(fullUrl));
     }
     
     if (!res.ok) {
@@ -314,9 +326,7 @@ export async function apiPatch<T>(
       });
     } catch (e: any) {
       console.error(`[API] Network error on PATCH ${fullUrl}:`, e);
-      throw new Error(
-        `Network error calling ${fullUrl}. Please check your internet connection and try again.`
-      );
+      throw new Error(createNetworkErrorMessage(fullUrl));
     }
     
     if (!res.ok) {

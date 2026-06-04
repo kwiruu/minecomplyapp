@@ -11,9 +11,9 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   StatusBar,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 import { theme } from "../../theme/theme";
@@ -23,6 +23,7 @@ import {
   moderateScale,
   normalizeFont,
 } from "../../utils/responsive";
+import { keyboardShouldPersistTapsForFabric } from "../../utils/nativeRuntimeProps";
 import { CustomHeader } from "../../components/CustomHeader";
 
 type ChoiceKey = "complied" | "partial" | "not";
@@ -771,7 +772,7 @@ export default function ECCMonitoringScreen2() {
                   flexGrow: 1,
                   justifyContent: "center",
                 }}
-                keyboardShouldPersistTaps="handled"
+                keyboardShouldPersistTaps={keyboardShouldPersistTapsForFabric}
               >
                 <View style={styles.modalCard}>
                   <Text style={styles.modalTitle}>

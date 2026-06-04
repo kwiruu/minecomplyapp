@@ -22,6 +22,7 @@ import type { MMTInfo } from "./types/mmt.types";
 import { Ionicons } from "@expo/vector-icons";
 import { useFileName } from "../../../contexts/FileNameContext";
 import { useCmvrStore } from "../../../store/cmvrStore";
+import { keyboardShouldPersistTapsForFabric } from "../../../utils/nativeRuntimeProps";
 import { createCMVRReport } from "../../../lib/cmvr";
 
 import {
@@ -1056,7 +1057,7 @@ const CMVRReportScreen: React.FC = () => {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps={keyboardShouldPersistTapsForFabric}
       >
         <View
           style={[

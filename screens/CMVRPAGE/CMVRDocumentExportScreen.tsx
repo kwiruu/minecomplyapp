@@ -13,7 +13,7 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../../contexts/AuthContext";
@@ -3769,7 +3769,7 @@ const buildCreateCMVRPayload = (
   return payload;
 };
 
-type CMVRDocumentExportScreenNavigationProp = StackNavigationProp<
+type CMVRDocumentExportScreenNavigationProp = NativeStackNavigationProp<
   Record<string, object | undefined>,
   string
 >;

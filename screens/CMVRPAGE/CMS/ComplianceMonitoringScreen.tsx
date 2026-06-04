@@ -15,6 +15,7 @@ import { useNavigation, CommonActions } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { CMSHeader } from "../../../components/CMSHeader";
 import { saveDraft } from "../../../lib/drafts";
+import { keyboardShouldPersistTapsForFabric } from "../../../utils/nativeRuntimeProps";
 import {
   createSignedDownloadUrl,
   uploadProjectLocationImage,
@@ -765,7 +766,7 @@ const ComplianceMonitoringScreen = ({ navigation, route }: any) => {
           style={styles.scrollView}
           contentContainerStyle={styles.scrollContent}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
+          keyboardShouldPersistTaps={keyboardShouldPersistTapsForFabric}
         >
           <CMSSectionHeader
             sectionNumber="1."
