@@ -1,5 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import "react-native-url-polyfill/auto";
+
+import { AppState, Platform } from "react-native";
+import { createClient, processLock } from "@supabase/supabase-js";
 import * as SecureStore from "expo-secure-store";
 import Constants from "expo-constants";
 
@@ -8,13 +10,14 @@ const supabaseUrl = Constants.expoConfig?.extra?.supabaseUrl || "";
 const supabaseAnonKey = Constants.expoConfig?.extra?.supabaseAnonKey || "";
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  const errorMsg = "Missing Supabase configuration. Please configure EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY in your build environment.";
+  const errorMsg =
+    "Missing Supabase configuration. Please configure EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY in your build environment.";
   console.error("[SUPABASE ERROR]", errorMsg);
-  console.error("[SUPABASE ERROR] Current values:", { 
-    supabaseUrl: supabaseUrl || "(empty)", 
-    supabaseAnonKey: supabaseAnonKey ? "(set but hidden)" : "(empty)" 
+  console.error("[SUPABASE ERROR] Current values:", {
+    supabaseUrl: supabaseUrl || "(empty)",
+    supabaseAnonKey: supabaseAnonKey ? "(set but hidden)" : "(empty)",
   });
-  
+
   // Don't throw error immediately - let the app load and show error UI
   // This prevents instant crashes and allows better error reporting
 }
@@ -97,6 +100,14 @@ const ExpoSecureStoreAdapter = {
   removeItem: (key: string) => removeChunkedItem(key),
 };
 
+function getUrlHost(value: string) {
+  try {
+    return value ? new URL(value).host : "(empty)";
+  } catch {
+    return "(invalid)";
+  }
+}
+
 // Create Supabase client with proper configuration for React Native
 // Use placeholder values if config is missing (prevents crash, auth will fail gracefully)
 export const supabase = createClient(
@@ -108,12 +119,30 @@ export const supabase = createClient(
       autoRefreshToken: true,
       persistSession: true,
       detectSessionInUrl: false, // Important for React Native
+      lock: processLock,
     },
   }
 );
 
+if (Platform.OS !== "web") {
+  AppState.addEventListener("change", (state) => {
+    if (state === "active") {
+      supabase.auth.startAutoRefresh();
+    } else {
+      supabase.auth.stopAutoRefresh();
+    }
+  });
+}
+
 // Export validation status for error handling
 export const isSupabaseConfigured = !!(supabaseUrl && supabaseAnonKey);
-export const supabaseConfigError = !isSupabaseConfigured 
+export const supabaseConfigError = !isSupabaseConfigured
   ? "Supabase credentials not configured. Please set EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY."
   : null;
+
+export const getSupabaseRuntimeDiagnostics = () => ({
+  configured: isSupabaseConfigured,
+  host: getUrlHost(supabaseUrl),
+  anonKeyLength: supabaseAnonKey.length,
+  platform: Platform.OS,
+});

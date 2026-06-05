@@ -12,7 +12,8 @@
     "check:local-api": "node scripts/check-local-api.js",
     "check:lockfile": "npm ci --include=dev --dry-run",
     "check:eas-managed": "node scripts/check-eas-managed-build.js",
-    "check:eas-build": "npm run check:lockfile && npm run check:native-props && npm run check:expo-deps && npm run check:eas-managed",
+    "check:eas-runtime-config": "node scripts/check-eas-runtime-config.js",
+    "check:eas-build": "npm run check:lockfile && npm run check:native-props && npm run check:expo-deps && npm run check:eas-managed && npm run check:eas-runtime-config",
     "check:runtime": "npm run check:native-props && npm run check:expo-deps && npm run check:local-api",
     "start:clear": "expo start --clear"
   },
