@@ -101,16 +101,19 @@ export const styles = StyleSheet.create({
     fontWeight: "600",
     letterSpacing: 0.2,
     lineHeight: 19,
+    flexShrink: 1,
+    minWidth: 0,
   },
   radioRow: {
     flexDirection: "row",
-    gap: 16,
-    alignItems: "center",
+    columnGap: 16,
+    rowGap: 8,
+    alignItems: "flex-start",
+    flexWrap: "wrap",
   },
   radioOption: {
     flexDirection: "row",
-    alignItems: "center",
-    gap: 6,
+    alignItems: "flex-start",
   },
   radioOuter: {
     width: 22,
@@ -120,6 +123,8 @@ export const styles = StyleSheet.create({
     borderColor: "#1E3A8A",
     alignItems: "center",
     justifyContent: "center",
+    marginRight: 6,
+    flexShrink: 0,
   },
   radioInner: {
     width: 12,
@@ -133,6 +138,8 @@ export const styles = StyleSheet.create({
     fontWeight: "500",
     letterSpacing: 0.1,
     lineHeight: 18,
+    flexShrink: 1,
+    minWidth: 0,
   },
   deleteButton: {
     position: 'absolute',

@@ -146,13 +146,16 @@ export const styles = StyleSheet.create({
   },
   radioGroup: {
     flexDirection: "row",
-    gap: 20,
-    alignItems: "center",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    columnGap: 20,
+    rowGap: 12,
   },
   checkboxRow: {
     flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
+    alignItems: "flex-start",
+    maxWidth: "100%",
+    minWidth: 0,
   },
   disabledCheckboxRow: {
     opacity: 0.5,
@@ -166,6 +169,8 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+    marginRight: 12,
+    flexShrink: 0,
   },
   checkboxSmall: {
     width: 20,
@@ -176,6 +181,8 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+    marginRight: 12,
+    flexShrink: 0,
   },
   checkboxChecked: {
     backgroundColor: '#02217C',
@@ -188,7 +195,9 @@ export const styles = StyleSheet.create({
   checkboxLabel: {
     fontSize: 14,
     color: "#1E293B",
-    flexShrink: 1,
+    flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
   },
   disabledCheckboxLabel: {
     color: "#94A3B8",

@@ -22,7 +22,12 @@ export const Checkbox: React.FC<CheckboxProps> = ({ label, value, onToggle, cont
 };
 
 const styles = StyleSheet.create({
-  container: { flexDirection: "row", alignItems: "center", marginRight: 12 },
+  container: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    marginRight: 12,
+    maxWidth: "100%",
+  },
   box: {
     width: 20,
     height: 20,
@@ -32,7 +37,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginRight: 6,
+    flexShrink: 0,
   },
   boxChecked: { borderColor: theme.colors.primaryDark },
-  label: { fontFamily: theme.typography.regular, color: theme.colors.text },
+  label: {
+    fontFamily: theme.typography.regular,
+    color: theme.colors.text,
+    flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
+  },
 });

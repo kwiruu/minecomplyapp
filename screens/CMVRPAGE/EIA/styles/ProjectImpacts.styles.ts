@@ -27,21 +27,27 @@ export const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
   label: {
     fontSize: 14,
     fontWeight: '500',
     color: '#1E293B',
+    flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
+    paddingRight: 12,
   },
   radioWrapper: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+    alignItems: 'flex-start',
+    flexShrink: 0,
   },
   radioLabel: {
     fontSize: 13,
     color: '#475569',
     fontWeight: '500',
+    lineHeight: 18,
+    marginLeft: 8,
   },
 });

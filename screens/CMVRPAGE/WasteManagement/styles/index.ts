@@ -104,13 +104,15 @@ export const plantPortSectionStyles = StyleSheet.create({
   },
   radioGroup: {
     flexDirection: 'row',
-    gap: 20,
+    flexWrap: 'wrap',
+    columnGap: 20,
+    rowGap: 12,
   },
   radioRow: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 12, // Increased from 10
+    alignItems: 'flex-start',
     marginBottom: 4, // Added margin
+    maxWidth: '100%',
   },
   radio: {
     width: 24,
@@ -121,6 +123,8 @@ export const plantPortSectionStyles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 12,
+    flexShrink: 0,
   },
   radioChecked: {
     borderColor: '#02217C',
@@ -135,6 +139,9 @@ export const plantPortSectionStyles = StyleSheet.create({
     fontSize: 14,
     color: '#1E293B',
     fontWeight: '500',
+    flexShrink: 1,
+    minWidth: 0,
+    lineHeight: 20,
   },
   totalLabel: {
     fontSize: 14,
@@ -160,9 +167,9 @@ export const plantPortSectionStyles = StyleSheet.create({
 export const plantSectionStyles = StyleSheet.create({
   checkboxRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 20, // Increased from 16
-    gap: 12,
+    maxWidth: '100%',
   },
   checkbox: {
     width: 24,
@@ -173,6 +180,8 @@ export const plantSectionStyles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 12,
+    flexShrink: 0,
   },
   checkboxChecked: {
     backgroundColor: '#02217C',
@@ -182,6 +191,9 @@ export const plantSectionStyles = StyleSheet.create({
     fontSize: 14,
     color: '#1E293B',
     fontWeight: '600',
+    flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
   },
   radioSection: {
     marginTop: 12, // Increased from 8
@@ -256,7 +268,9 @@ export const plantSectionStyles = StyleSheet.create({
   },
   radioGroup: {
     flexDirection: 'row',
-    gap: 20,
+    flexWrap: 'wrap',
+    columnGap: 20,
+    rowGap: 12,
   },
   container: {
     backgroundColor: 'white',
@@ -305,9 +319,9 @@ export const plantSectionStyles = StyleSheet.create({
   },
   radioRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 20, // Increased from 16
-    gap: 12,
+    maxWidth: '100%',
   },
   radio: {
     width: 24,
@@ -318,6 +332,8 @@ export const plantSectionStyles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 12,
+    flexShrink: 0,
   },
   radioChecked: {
     borderColor: '#02217C',
@@ -332,6 +348,8 @@ export const plantSectionStyles = StyleSheet.create({
     fontSize: 14,
     color: '#1E293B',
     flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
     fontWeight: '500',
   },
 });
@@ -384,9 +402,9 @@ export const PortSectionStyles = StyleSheet.create({
   },
   checkboxRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 20, // Increased from 16
-    gap: 12,
+    maxWidth: '100%',
   },
   checkbox: {
     width: 24,
@@ -397,6 +415,8 @@ export const PortSectionStyles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 12,
+    flexShrink: 0,
   },
   checkboxChecked: {
     backgroundColor: '#02217C',
@@ -406,6 +426,9 @@ export const PortSectionStyles = StyleSheet.create({
     fontSize: 14,
     color: '#1E293B',
     fontWeight: '600',
+    flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
   },
   radioSection: {
     marginTop: 12, // Increased from 8
@@ -415,9 +438,9 @@ export const PortSectionStyles = StyleSheet.create({
   },
   radioRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 20, // Increased from 16
-    gap: 12,
+    maxWidth: '100%',
   },
   radio: {
     width: 24,
@@ -428,6 +451,8 @@ export const PortSectionStyles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 12,
+    flexShrink: 0,
   },
   radioChecked: {
     borderColor: '#02217C',
@@ -442,6 +467,8 @@ export const PortSectionStyles = StyleSheet.create({
     fontSize: 14,
     color: '#1E293B',
     flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
     fontWeight: '500',
   },
   disabledText: {
@@ -452,9 +479,9 @@ export const PortSectionStyles = StyleSheet.create({
 export const QuarrySectionStyles = StyleSheet.create({
   checkboxRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 20, // Increased from 16
-    gap: 12,
+    maxWidth: '100%',
   },
   checkbox: {
     width: 24,
@@ -465,6 +492,8 @@ export const QuarrySectionStyles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 12,
+    flexShrink: 0,
   },
   checkboxChecked: {
     backgroundColor: '#02217C',
@@ -474,6 +503,9 @@ export const QuarrySectionStyles = StyleSheet.create({
     fontSize: 14,
     color: '#1E293B',
     fontWeight: '600',
+    flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
   },
   radioSection: {
     marginTop: 12, // Increased from 8
@@ -548,7 +580,9 @@ export const QuarrySectionStyles = StyleSheet.create({
   },
   radioGroup: {
     flexDirection: 'row',
-    gap: 20,
+    flexWrap: 'wrap',
+    columnGap: 20,
+    rowGap: 12,
   },
   container: {
     backgroundColor: 'white',
@@ -597,9 +631,9 @@ export const QuarrySectionStyles = StyleSheet.create({
   },
   radioRow: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     marginBottom: 20, // Increased from 16
-    gap: 12,
+    maxWidth: '100%',
   },
   radio: {
     width: 24,
@@ -610,6 +644,8 @@ export const QuarrySectionStyles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 12,
+    flexShrink: 0,
   },
   radioChecked: {
     borderColor: '#02217C',
@@ -624,6 +660,8 @@ export const QuarrySectionStyles = StyleSheet.create({
     fontSize: 14,
     color: '#1E293B',
     flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
     fontWeight: '500',
   },
 });

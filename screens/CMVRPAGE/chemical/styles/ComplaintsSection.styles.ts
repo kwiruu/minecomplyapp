@@ -168,13 +168,14 @@ export const styles = StyleSheet.create({
   radioGroup: {
     flexDirection: "row",
     flexWrap: "wrap",
-    gap: 16,
+    columnGap: 16,
+    rowGap: 8,
   },
   radioOption: {
     flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
+    alignItems: "flex-start",
     marginBottom: 8,
+    maxWidth: "100%",
   },
   radio: {
     width: 24,
@@ -185,6 +186,8 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+    marginRight: 8,
+    flexShrink: 0,
   },
   radioSelected: {
     borderColor: '#02217C',
@@ -202,6 +205,9 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: "500",
     color: "#334155",
+    flexShrink: 1,
+    minWidth: 0,
+    lineHeight: 20,
   },
   disabledText: {
     color: "#94A3B8",
