@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
   Animated,
-  SafeAreaView,
   Alert,
   Image,
   Modal,
@@ -14,6 +13,7 @@ import {
   Dimensions,
   Platform,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SignatureScreen from "react-native-signature-canvas";
 // react-native-signature-canvas doesn't ship strong TSX types for JSX usage in some setups.

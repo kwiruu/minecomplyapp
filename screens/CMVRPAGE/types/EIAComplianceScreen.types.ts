@@ -1,5 +1,5 @@
 // EIAComplianceScreen.types.ts
-import { StackNavigationProp } from "@react-navigation/stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 
 export type RootStackParamList = {
@@ -7,7 +7,7 @@ export type RootStackParamList = {
   EnvironmentalCompliance: undefined;
 };
 
-export type EIAComplianceScreenNavigationProp = StackNavigationProp<
+export type EIAComplianceScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "EIACompliance"
 >;

@@ -7,6 +7,9 @@ const sanitizeString = (value) => {
   return String(value).trim();
 };
 
+const isPlainObject = (value) =>
+  value !== null && typeof value === "object" && !Array.isArray(value);
+
 const parseFirstNumber = (val) => {
   if (val === undefined || val === null) return undefined;
   const match = String(val).match(/-?\d*\.?\d+/);
@@ -870,7 +873,7 @@ const buildAirQualityImpactAssessment = (raw) => {
 const buildWaterQualityImpactAssessment = (raw) => {
   if (!raw) return undefined;
 
-  if (raw.waterQuality || raw.port) {
+  if (raw.waterQuality || raw.port || raw.portData || raw.portEnabled) {
     const result = {};
 
     if (raw.quarryEnabled && raw.quarry) {
@@ -886,6 +889,7 @@ const buildWaterQualityImpactAssessment = (raw) => {
     result.quarryEnabled = !!raw.quarryEnabled;
     result.plantEnabled = !!raw.plantEnabled;
     result.quarryPlantEnabled = !!raw.quarryPlantEnabled;
+    result.portEnabled = !!raw.portEnabled;
 
     if (raw.waterQuality) {
       const waterQualityParams = [];
@@ -965,39 +969,54 @@ const buildWaterQualityImpactAssessment = (raw) => {
       }
     }
 
-    if (raw.port) {
+    const portSource = isPlainObject(raw.portData)
+      ? raw.portData
+      : isPlainObject(raw.port)
+        ? raw.port
+        : {};
+    const portDescription =
+      typeof raw.port === "string"
+        ? sanitizeString(raw.port)
+        : sanitizeString(
+            raw.portInput ||
+              portSource.locationDescription ||
+              portSource.portName ||
+              portSource.locationInput
+          );
+
+    if (raw.portEnabled || portDescription || Object.keys(portSource).length) {
       const portParams = [];
 
-      if (raw.port.parameter?.trim()) {
+      if (portSource.parameter?.trim()) {
         portParams.push({
-          name: sanitizeString(raw.port.parameter),
+          name: sanitizeString(portSource.parameter),
           result: {
             internalMonitoring: {
-              month: sanitizeString(raw.port.resultType),
+              month: sanitizeString(portSource.resultType),
               readings: [
                 {
-                  label: sanitizeString(raw.port.parameter),
-                  current_mgL: parseFirstNumber(raw.port.tssCurrent),
-                  previous_mgL: parseFirstNumber(raw.port.tssPrevious),
+                  label: sanitizeString(portSource.parameter),
+                  current_mgL: parseFirstNumber(portSource.tssCurrent),
+                  previous_mgL: parseFirstNumber(portSource.tssPrevious),
                 },
               ],
             },
             mmtConfirmatorySampling: {
-              current: sanitizeString(raw.port.mmtCurrent),
-              previous: sanitizeString(raw.port.mmtPrevious),
+              current: sanitizeString(portSource.mmtCurrent),
+              previous: sanitizeString(portSource.mmtPrevious),
             },
           },
           denrStandard: {
-            redFlag: sanitizeString(raw.port.eqplRedFlag),
-            action: sanitizeString(raw.port.action),
-            limit_mgL: parseFirstNumber(raw.port.limit),
+            redFlag: sanitizeString(portSource.eqplRedFlag),
+            action: sanitizeString(portSource.action),
+            limit_mgL: parseFirstNumber(portSource.limit),
           },
-          remark: sanitizeString(raw.port.remarks),
+          remark: sanitizeString(portSource.remarks),
         });
       }
 
-      if (Array.isArray(raw.port.additionalParameters)) {
-        raw.port.additionalParameters.forEach((param) => {
+      if (Array.isArray(portSource.additionalParameters)) {
+        portSource.additionalParameters.forEach((param) => {
           if (param.parameter?.trim()) {
             portParams.push({
               name: sanitizeString(param.parameter),
@@ -1028,18 +1047,16 @@ const buildWaterQualityImpactAssessment = (raw) => {
         });
       }
 
-      if (portParams.length > 0) {
+      if (portParams.length > 0 || portDescription) {
         result.port = {
-          locationDescription: sanitizeString(
-            raw.port.portName || raw.port.locationInput || "Port"
-          ),
+          locationDescription: portDescription || "Port",
           parameters: portParams,
-          samplingDate: sanitizeString(raw.port.dateTime),
-          weatherAndWind: sanitizeString(raw.port.weatherWind),
+          samplingDate: sanitizeString(portSource.dateTime),
+          weatherAndWind: sanitizeString(portSource.weatherWind),
           explanationForConfirmatorySampling: sanitizeString(
-            raw.port.isExplanationNA ? "N/A" : raw.port.explanation
+            portSource.isExplanationNA ? "N/A" : portSource.explanation
           ),
-          overallAssessment: sanitizeString(raw.port.overallCompliance),
+          overallAssessment: sanitizeString(portSource.overallCompliance),
         };
       }
     }

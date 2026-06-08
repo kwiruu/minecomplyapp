@@ -122,7 +122,7 @@ export const styles = StyleSheet.create({
   radioRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     paddingVertical: 12,
     paddingHorizontal: 16,
     backgroundColor: '#F8FAFC',
@@ -135,6 +135,8 @@ export const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#0F172A',
     flex: 1,
+    minWidth: 0,
+    lineHeight: 21,
   },
   radioGroupYesNo: {
     flexDirection: 'row',
@@ -143,8 +145,7 @@ export const styles = StyleSheet.create({
   },
   radioOptionYesNo: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+    alignItems: 'flex-start',
   },
   radio: {
     width: 24,
@@ -155,6 +156,8 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
+    marginRight: 8,
+    flexShrink: 0,
   },
   radioSelected: {
     borderColor: '#02217C',
@@ -172,6 +175,9 @@ export const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     color: '#334155',
+    flexShrink: 1,
+    minWidth: 0,
+    lineHeight: 20,
   },
   disabledText: {
     color: '#94A3B8',
@@ -218,8 +224,7 @@ export const styles = StyleSheet.create({
   },
   radioOption: {
     flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+    alignItems: 'flex-start',
     width: '100%',
   },
   specifyInput: {

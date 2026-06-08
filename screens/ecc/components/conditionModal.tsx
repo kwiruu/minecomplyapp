@@ -12,6 +12,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import { ConditionModalProps } from "../types/eccMonitoring";
 import { styles } from "../styles/eccMonitoringScreen";
+import { keyboardShouldPersistTapsForFabric } from "../../../utils/nativeRuntimeProps";
 
 export const ConditionModal = ({
   visible,
@@ -38,7 +39,7 @@ export const ConditionModal = ({
 
               <ScrollView
                 style={styles.modalScrollArea}
-                keyboardShouldPersistTaps="handled"
+                keyboardShouldPersistTaps={keyboardShouldPersistTapsForFabric}
                 showsVerticalScrollIndicator={false}
               >
                 <Text style={styles.modalLabel}>Title</Text>

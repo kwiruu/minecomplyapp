@@ -1,5 +1,5 @@
 // CMVRPage2Screen.types.ts
-import { StackNavigationProp } from "@react-navigation/stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 
 export type RootStackParamList = {
@@ -23,7 +23,7 @@ export type RootStackParamList = {
   };
 };
 
-export type CMVRPage2ScreenNavigationProp = StackNavigationProp<
+export type CMVRPage2ScreenNavigationProp = NativeStackNavigationProp<
   RootStackParamList,
   "CMVRPage2"
 >;

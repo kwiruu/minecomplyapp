@@ -23,10 +23,21 @@ export const RadioButton: React.FC<RadioButtonProps> = ({ label, value, selected
 };
 
 const styles = StyleSheet.create({
-  container: { flexDirection: "row", alignItems: "center", marginRight: 12 },
-  outer: { width: 18, height: 18, borderRadius: 9, borderWidth: 2, borderColor: "#EAEAEA", alignItems: "center", justifyContent: "center", marginRight: 6 },
+  container: {
+    flexDirection: "row",
+    alignItems: "flex-start",
+    marginRight: 12,
+    maxWidth: "100%",
+  },
+  outer: { width: 18, height: 18, borderRadius: 9, borderWidth: 2, borderColor: "#EAEAEA", alignItems: "center", justifyContent: "center", marginRight: 6, flexShrink: 0 },
   selected: { borderColor: theme.colors.primaryDark },
   inner: { width: 10, height: 10, borderRadius: 5, backgroundColor: theme.colors.primaryDark },
-  label: { fontFamily: theme.typography.regular, color: theme.colors.text },
+  label: {
+    fontFamily: theme.typography.regular,
+    color: theme.colors.text,
+    flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
+  },
   error: { borderColor: theme.colors.error, color: theme.colors.error },
 });

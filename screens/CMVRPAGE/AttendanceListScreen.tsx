@@ -6,10 +6,10 @@ import {
   ScrollView,
   Alert,
   Animated,
-  SafeAreaView,
   RefreshControl,
   Linking,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Calendar,
   ClipboardList,

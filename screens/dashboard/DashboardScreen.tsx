@@ -10,6 +10,7 @@ import {
   Animated,
   ActivityIndicator,
   RefreshControl,
+  Alert,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -64,6 +65,44 @@ type EccDraftMetadata = {
   date: string;
   saveAt: string;
 };
+
+function getDisplayName(user: any): string {
+  const metadataName =
+    user?.user_metadata?.full_name || user?.user_metadata?.name;
+
+  if (typeof metadataName === "string" && metadataName.trim().length > 0) {
+    return metadataName.trim();
+  }
+
+  if (typeof user?.email === "string" && user.email.trim().length > 0) {
+    return user.email.split("@")[0] || "User";
+  }
+
+  return "User";
+}
+
+function getAvatarInitials(displayName: string): string {
+  const nameParts = displayName
+    .trim()
+    .split(/[\s._-]+/)
+    .filter(Boolean);
+
+  if (nameParts.length === 0) {
+    return "U";
+  }
+
+  const firstNameChars = Array.from(nameParts[0]);
+  const firstInitial = firstNameChars[0] || "";
+
+  if (nameParts.length === 1) {
+    return (firstNameChars.slice(0, 2).join("") || "U").toUpperCase();
+  }
+
+  const lastNameChars = Array.from(nameParts[nameParts.length - 1]);
+  const lastInitial = lastNameChars[0] || "";
+
+  return (`${firstInitial}${lastInitial}` || "U").toUpperCase();
+}
 
 export default function DashboardScreen({ navigation }: any) {
   const { user, session } = useAuth();
@@ -286,11 +325,8 @@ export default function DashboardScreen({ navigation }: any) {
     reportsCount: reports.length,
   });
 
-  const userName =
-    (user as any)?.user_metadata?.full_name ||
-    (user as any)?.user_metadata?.name ||
-    (user as any)?.email?.split("@")[0] ||
-    "User";
+  const userName = getDisplayName(user);
+  const avatarInitials = getAvatarInitials(userName);
 
   return (
     <SafeAreaView style={styles.safeContainer}>
@@ -309,19 +345,28 @@ export default function DashboardScreen({ navigation }: any) {
       >
         {/* HEADER */}
         <View style={styles.header}>
-          <View>
+          <View style={styles.greetingBlock}>
             <Text style={styles.subGreeting}>Welcome back,</Text>
-            <Text style={styles.greeting}>{userName}</Text>
+            <Text
+              style={styles.greeting}
+              numberOfLines={2}
+              adjustsFontSizeToFit
+              minimumFontScale={0.82}
+            >
+              {userName}
+            </Text>
           </View>
           <TouchableOpacity
             style={styles.avatar}
             onPress={() => navigation.navigate("Profile")}
           >
-            <Text style={styles.avatarText}>
-              {userName
-                .split(" ")
-                .map((n: string) => n[0])
-                .join("")}
+            <Text
+              style={styles.avatarText}
+              numberOfLines={1}
+              adjustsFontSizeToFit
+              minimumFontScale={0.8}
+            >
+              {avatarInitials}
             </Text>
           </TouchableOpacity>
         </View>

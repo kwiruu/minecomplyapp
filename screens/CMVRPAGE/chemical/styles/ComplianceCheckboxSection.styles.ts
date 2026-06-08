@@ -59,9 +59,9 @@ export const styles = StyleSheet.create({
   },
   checkboxContent: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     padding: 20,
-    gap: 12,
+    maxWidth: "100%",
   },
   checkbox: {
     width: 28,
@@ -72,6 +72,8 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+    marginRight: 12,
+    flexShrink: 0,
   },
   checkboxChecked: {
     backgroundColor: '#02217C',
@@ -81,6 +83,8 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     color: "#334155",
     fontWeight: "500",
-    flexShrink: 1,
+    flex: 1,
+    minWidth: 0,
+    lineHeight: 21,
   },
 });

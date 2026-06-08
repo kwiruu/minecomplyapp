@@ -13,6 +13,7 @@ import { useNavigation, CommonActions } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { CMSHeader } from "../../../components/CMSHeader";
 import { useCmvrStore } from "../../../store/cmvrStore";
+import { keyboardShouldPersistTapsForFabric } from "../../../utils/nativeRuntimeProps";
 import { ProjectImpacts } from "./components/ProjectImpacts";
 import { OperationSectionComponent } from "./components/OperationSection";
 import { OverallCompliance } from "./components/OverallCompliance";
@@ -444,7 +445,7 @@ const EIAComplianceScreen: React.FC<{
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps={keyboardShouldPersistTapsForFabric}
       >
         <ProjectImpacts
           preConstruction={preConstruction}

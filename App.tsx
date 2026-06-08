@@ -3,6 +3,7 @@ import "./global.css";
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { ActivityIndicator, View, Text, StyleSheet } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { AuthProvider } from "./contexts/AuthContext";
 import AppNavigator from "./navigation/AppNavigator";
 import { ThemeProvider as AppThemeProvider } from "./theme/ThemeProvider";
@@ -48,33 +49,39 @@ export default function App() {
   // Show loading screen while validating
   if (isValidating) {
     return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0066cc" />
-        <Text style={styles.loadingText}>Initializing MineComply...</Text>
-      </View>
+      <SafeAreaProvider>
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="large" color="#0066cc" />
+          <Text style={styles.loadingText}>Initializing MineComply...</Text>
+        </View>
+      </SafeAreaProvider>
     );
   }
 
   // Show configuration error screen if validation failed
   if (configError) {
     return (
-      <ConfigurationErrorScreen 
-        error={configError}
-        details="This APK was built without the required environment variables. Please rebuild with proper configuration or contact your administrator."
-      />
+      <SafeAreaProvider>
+        <ConfigurationErrorScreen
+          error={configError}
+          details="This APK was built without the required environment variables. Please rebuild with proper configuration or contact your administrator."
+        />
+      </SafeAreaProvider>
     );
   }
 
   // Normal app flow
   return (
-    <AppThemeProvider>
+    <SafeAreaProvider>
+      <AppThemeProvider>
         <SafeAreaWebProvider>
           <AuthProvider>
             <AppNavigator />
             <StatusBar style="auto" />
           </AuthProvider>
         </SafeAreaWebProvider>
-    </AppThemeProvider>
+      </AppThemeProvider>
+    </SafeAreaProvider>
   );
 }
 

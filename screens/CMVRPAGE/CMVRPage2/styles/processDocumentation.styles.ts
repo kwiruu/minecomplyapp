@@ -98,14 +98,17 @@ export const styles = StyleSheet.create({
   },
   radioGroup: {
     flexDirection: "row",
-    gap: 20,
-    alignItems: "center",
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+    columnGap: 20,
+    rowGap: 12,
     marginTop: 4,
   },
   checkboxRow: {
     flexDirection: "row",
-    alignItems: "center",
-    gap: 12,
+    alignItems: "flex-start",
+    maxWidth: "100%",
+    minWidth: 0,
     marginTop: 10,
   },
   checkbox: {
@@ -117,6 +120,8 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+    marginRight: 12,
+    flexShrink: 0,
   },
   checkboxSmall: {
     width: 20,
@@ -127,6 +132,8 @@ export const styles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+    marginRight: 12,
+    flexShrink: 0,
   },
   checkboxChecked: {
     backgroundColor: '#02217C',
@@ -135,7 +142,9 @@ export const styles = StyleSheet.create({
   checkboxLabel: {
     fontSize: 14,
     color: "#1E293B",
-    flexShrink: 1,
+    flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
   },
   naButton: {
     flexDirection: "row",
@@ -186,8 +195,8 @@ export const styles = StyleSheet.create({
   },
   activityHeader: {
     flexDirection: "row",
-    alignItems: "center",
-    gap: 10,
+    alignItems: "flex-start",
+    columnGap: 10,
     marginBottom: 16,
     paddingBottom: 12,
     borderBottomWidth: 1.5,
@@ -197,7 +206,9 @@ export const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "700",
     color: '#02217C',
-    flexShrink: 1,
+    flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
   },
   activitySubtitle: {
     fontSize: 12,

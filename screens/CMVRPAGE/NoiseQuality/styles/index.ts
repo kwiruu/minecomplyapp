@@ -602,9 +602,9 @@ export const quarrySectionStyles = StyleSheet.create({
   },
   radioRow: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
     marginBottom: 16,
-    gap: 12,
+    maxWidth: "100%",
   },
   radio: {
     width: 24,
@@ -615,6 +615,8 @@ export const quarrySectionStyles = StyleSheet.create({
     backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
+    marginRight: 12,
+    flexShrink: 0,
   },
   radioChecked: {
     borderColor: "#02217C",
@@ -629,6 +631,8 @@ export const quarrySectionStyles = StyleSheet.create({
     fontSize: 14,
     color: "#1E293B",
     flex: 1,
+    minWidth: 0,
+    lineHeight: 20,
     fontWeight: "500",
   },
   bulletRow: {

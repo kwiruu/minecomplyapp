@@ -6,7 +6,6 @@ import {
   ScrollView,
   Alert,
   Animated,
-  SafeAreaView,
   RefreshControl,
   Linking,
   Platform,
@@ -15,6 +14,7 @@ import {
   Modal,
   Dimensions,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as DocumentPicker from "expo-document-picker";
 import * as ImagePicker from "expo-image-picker";

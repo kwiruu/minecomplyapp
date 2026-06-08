@@ -13,6 +13,40 @@ import { styles } from "./styles/authScreen";
 import { FloatingLabelInput } from "./components/FloatingLabelInput";
 // import { scale } from '../utils/responsive';
 import { useAuth } from "../../contexts/AuthContext";
+import { keyboardShouldPersistTapsForFabric } from "../../utils/nativeRuntimeProps";
+import { getSupabaseRuntimeDiagnostics } from "../../lib/supabase";
+
+function getErrorMessage(error: any) {
+  return error?.message || String(error || "Something went wrong");
+}
+
+function isNetworkAuthError(error: any) {
+  const message = getErrorMessage(error).toLowerCase();
+  return (
+    message.includes("network request failed") ||
+    message.includes("failed to fetch") ||
+    message.includes("network request timed out")
+  );
+}
+
+function showAuthError(error: any, action: "sign in" | "sign up") {
+  const message = getErrorMessage(error);
+
+  if (isNetworkAuthError(error)) {
+    console.error("[AUTH] Authentication network request failed", {
+      action,
+      message,
+      supabase: getSupabaseRuntimeDiagnostics(),
+    });
+    Alert.alert(
+      "Connection Error",
+      "The app could not reach the authentication server. Please check your internet connection and try again. If this keeps happening, contact support."
+    );
+    return;
+  }
+
+  Alert.alert("Error", message);
+}
 
 export default function AuthScreen({ navigation }: any) {
   const [isLogin, setIsLogin] = useState(true);
@@ -44,11 +78,11 @@ export default function AuthScreen({ navigation }: any) {
       const { data, error } = result;
 
       if (!error && data?.user) {
-        setUser(data.user); // Sets the user state if the operation was successful
-      }
+        setUser(data.user); // Sets the user state if the operation was successful
+      }
       if (result.error) {
         // Check if it's a duplicate email error
-        const errorMessage = result.error.message.toLowerCase();
+        const errorMessage = getErrorMessage(result.error).toLowerCase();
         if (
           errorMessage.includes("already registered") ||
           errorMessage.includes("already exists") ||
@@ -60,7 +94,7 @@ export default function AuthScreen({ navigation }: any) {
             "This email is already registered. Please sign in instead or use a different email."
           );
         } else {
-          Alert.alert("Error", result.error.message);
+          showAuthError(result.error, isLogin ? "sign in" : "sign up");
         }
       } else if (!isLogin) {
         // Handle signup success
@@ -106,7 +140,7 @@ export default function AuthScreen({ navigation }: any) {
         }
       }
     } catch (error: any) {
-      Alert.alert("Error", error.message);
+      showAuthError(error, isLogin ? "sign in" : "sign up");
     } finally {
       setLoading(false);
     }
@@ -129,7 +163,7 @@ export default function AuthScreen({ navigation }: any) {
       <ScrollView
         contentContainerStyle={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps={keyboardShouldPersistTapsForFabric}
       >
         {/* Header Section */}
         <View style={styles.header}>

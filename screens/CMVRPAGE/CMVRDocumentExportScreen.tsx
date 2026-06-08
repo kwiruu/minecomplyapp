@@ -13,7 +13,7 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation, useRoute, RouteProp } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAuth } from "../../contexts/AuthContext";
@@ -1129,6 +1129,8 @@ const transformWaterQualityForPayload = (raw: any) => {
   const sanitizeText = (value: any) => sanitizeString(value);
   const hasContent = (value: any) =>
     value !== undefined && value !== null && String(value).trim().length > 0;
+  const isPlainObject = (value: any) =>
+    value !== null && typeof value === "object" && !Array.isArray(value);
 
   const shouldIncludeParameter = (param: any) => {
     if (!param || typeof param !== "object") return false;
@@ -1178,6 +1180,15 @@ const transformWaterQualityForPayload = (raw: any) => {
   const buildLocationDescriptions = () => {
     const pickDescription = (...values: any[]) => {
       for (const value of values) {
+        if (isPlainObject(value)) {
+          const nestedDescription = sanitizeText(
+            value.locationDescription ?? value.locationInput ?? value.portName
+          );
+          if (nestedDescription) {
+            return nestedDescription;
+          }
+          continue;
+        }
         const cleaned = sanitizeText(value);
         if (cleaned) {
           return cleaned;
@@ -1193,14 +1204,14 @@ const transformWaterQualityForPayload = (raw: any) => {
         "quarryPlant",
         pickDescription(raw.quarryPlant, raw?.data?.quarryPlantInput),
       ],
-      ["port", pickDescription(raw.portInput, raw.port, raw?.data?.portInput)], // ✅ FIX: Prioritize portInput for port description
+      ["port", pickDescription(raw.portInput, raw.port, raw?.data?.portInput)],
     ];
 
     const labels: Record<string, string> = {
       quarry: "Quarry",
       plant: "Plant",
       quarryPlant: "Quarry / Plant",
-      port: "Port", // ✅ FIX: Add port label
+      port: "Port",
     };
 
     const map: Record<string, string> = {};
@@ -1244,10 +1255,6 @@ const transformWaterQualityForPayload = (raw: any) => {
     if (locationDescriptions.quarryPlant) {
       result.quarryPlant = locationDescriptions.quarryPlant;
     }
-    if (locationDescriptions.port) {
-      result.port = locationDescriptions.port;
-    }
-
     // Add checkbox states
     if (raw.quarryEnabled != null) {
       result.quarryEnabled = !!raw.quarryEnabled;
@@ -1357,7 +1364,7 @@ const transformWaterQualityForPayload = (raw: any) => {
       }
     }
 
-    const buildPortPayload = (portSource: any) => {
+    const buildPortPayload = (portSource: any, fallbackDescription = "") => {
       const extraPortParams = Array.isArray(portSource?.additionalParameters)
         ? portSource.additionalParameters
         : [];
@@ -1378,16 +1385,19 @@ const transformWaterQualityForPayload = (raw: any) => {
         overallAssessment,
       ].some((field) => hasContent(field));
 
-      if (!params.length && !metadataPresent) {
+      const locationDescription =
+        sanitizeText(
+          portSource?.locationDescription ??
+            portSource?.portName ??
+            portSource?.locationInput
+        ) || fallbackDescription;
+
+      if (!params.length && !metadataPresent && !locationDescription) {
         return undefined;
       }
 
-      const locationDescription =
-        sanitizeText(portSource?.portName ?? portSource?.locationInput) ||
-        "Port";
-
       return {
-        locationDescription,
+        locationDescription: locationDescription || "Port",
         parameters: params,
         samplingDate,
         weatherAndWind,
@@ -1397,27 +1407,24 @@ const transformWaterQualityForPayload = (raw: any) => {
     };
 
     // Transform port data (separate from waterQuality)
-    // ✅ FIX: Handle port as string description + portData as monitoring object
-    if (raw.portEnabled && (typeof raw.port === 'string' || raw.portData)) {
-      // Combine port description (string) with portData (monitoring object)
-      const portDescription = typeof raw.port === 'string' ? raw.port : "";
-      const portMonitoringData = raw.portData || (typeof raw.port === 'object' ? raw.port : {});
-      
-      // Build combined port source
+    // Keep the API contract stable: port is always an object.
+    const portDescription = locationDescriptions.port;
+    const portMonitoringData = isPlainObject(raw.portData)
+      ? raw.portData
+      : isPlainObject(raw.port)
+        ? raw.port
+        : {};
+    if (raw.portEnabled || portDescription || Object.keys(portMonitoringData).length > 0) {
       const portSource = {
         ...portMonitoringData,
         locationInput: portDescription || portMonitoringData.locationInput || "",
-        locationDescription: portDescription || portMonitoringData.locationDescription || "",
+        locationDescription:
+          portDescription || portMonitoringData.locationDescription || "",
       };
-      
-      const portPayload = buildPortPayload(portSource);
+
+      const portPayload = buildPortPayload(portSource, portDescription);
       if (portPayload) {
-        // Ensure description is set from port string
-        if (portDescription.trim()) {
-          portPayload.locationDescription = sanitizeText(portDescription);
-        }
         result.port = portPayload;
-        result.portEnabled = true;
       }
     }
 
@@ -3769,7 +3776,7 @@ const buildCreateCMVRPayload = (
   return payload;
 };
 
-type CMVRDocumentExportScreenNavigationProp = StackNavigationProp<
+type CMVRDocumentExportScreenNavigationProp = NativeStackNavigationProp<
   Record<string, object | undefined>,
   string
 >;
@@ -4531,7 +4538,10 @@ const CMVRDocumentExportScreen = () => {
       Alert.alert("Updated", "Your CMVR report has been updated.");
     } catch (e: any) {
       console.error("Update CMVR report failed:", e);
-      Alert.alert("Update Failed", e?.message || "Could not update report.");
+      Alert.alert(
+        "Update Failed",
+        "Could not update this draft. Please review the changed section and try again."
+      );
     } finally {
       setIsUpdating(false);
     }

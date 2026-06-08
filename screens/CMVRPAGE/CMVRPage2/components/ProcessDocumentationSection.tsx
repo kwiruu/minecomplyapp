@@ -222,8 +222,8 @@ export const ProcessDocumentationSection: React.FC<ProcessDocumentationProps> = 
         <View style={styles.activityCard}>
           <View style={styles.activityHeader}>
             <Ionicons name="flask" size={18} color='#02217C' />
-            <View style={{ flex: 1 }}>
-              <Text style={styles.activityTitle}>Site Validation – Confirmatory Sampling</Text>
+            <View style={{ flex: 1, minWidth: 0 }}>
+              <Text style={styles.activityTitle}>Site Validation - Confirmatory Sampling</Text>
               <Text style={styles.activitySubtitle}>(if needed)</Text>
             </View>
           </View>
